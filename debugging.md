@@ -124,6 +124,28 @@ We will keep appending updates here.
     - Triggers optional deployment webhook via `STREAMLIT_DEPLOY_WEBHOOK_URL` secret
 - Status: Implemented.
 
+### 12) Streamlit Cloud deployment readiness
+- Goal: Prepare repository for direct deployment on Streamlit Community Cloud.
+- Action taken:
+  - Added `.streamlit/config.toml` (server + theme defaults)
+  - Added `runtime.txt` (Python 3.11)
+  - Added deployment guide section in `README.md` with:
+    - Main file path (`streamlit_app.py`)
+    - Required secret (`GROQ_API_KEY`)
+    - notes about ephemeral filesystem
+- Status: Ready for Streamlit Cloud deployment from GitHub.
+
+### 13) GitHub test workflow import failure (`No module named 'src'`)
+- Issue: `test.yml` failed in GitHub Actions while collecting tests due to missing `src` import path.
+- Root cause:
+  - CI test runner environment did not consistently include repo root in Python import path.
+- Action taken:
+  - Added `tests/conftest.py` to insert project root into `sys.path` for pytest runs
+  - Updated `.github/workflows/test.yml` with `PYTHONPATH: .` for extra CI stability
+- Validation:
+  - Local pytest run passed: `3 passed`
+- Status: Fixed.
+
 ## Next updates
 - Add each new issue in this format:
   - Issue

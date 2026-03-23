@@ -31,6 +31,7 @@
 - [How It Works](#-how-it-works)
 - [Why Batching?](#-why-batching)
 - [Next Steps](#-next-steps)
+- [Deploy on Streamlit Cloud](#-deploy-on-streamlit-cloud)
 - [Author](#-author)
 - [License](#-license)
 
@@ -225,6 +226,49 @@ The indexed vector store is ready to be connected to a retriever + LLM. You can 
 - 🔎 **Semantic Search Engine** — surface the most relevant passages instantly
 
 > **Suggested extensions:** Add a Gradio/Streamlit UI, integrate OpenAI / Ollama as the LLM, or expose the pipeline as a REST API.
+
+---
+
+## ☁️ Deploy on Streamlit Cloud
+
+You can deploy this app directly from GitHub to Streamlit Community Cloud.
+
+### 1) Push latest code to GitHub
+
+Make sure these files are present in your repo:
+
+- `streamlit_app.py` (main app file)
+- `requirements.txt`
+- `.streamlit/config.toml`
+- `runtime.txt`
+
+### 2) Create app on Streamlit Community Cloud
+
+1. Go to https://share.streamlit.io/
+2. Click **New app**
+3. Select repository: `himanshu231204/simple-rag-pipeline`
+4. Set **Main file path** to: `streamlit_app.py`
+5. Click **Deploy**
+
+### 3) Add required secret
+
+In Streamlit app settings, add this secret:
+
+```toml
+GROQ_API_KEY = "your_groq_api_key"
+```
+
+You can add it under **App settings -> Secrets**.
+
+### 4) Notes for RAG data/index
+
+- Streamlit Cloud filesystem is ephemeral.
+- If FAISS index is missing at startup, app can rebuild from `data/`.
+- Large PDFs can increase startup time.
+
+### 5) Redeploy after changes
+
+Any new push to your selected branch triggers app rebuild/redeploy in Streamlit Cloud.
 
 ---
 
