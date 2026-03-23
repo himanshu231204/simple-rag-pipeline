@@ -30,7 +30,7 @@ With this, app starts ready-to-chat on Streamlit Cloud.
 
 - `ci.yml`: syntax checks
 - `test.yml`: pytest suite
-- `cd.yml`: optional deployment webhook trigger
+- `cd.yml`: gated deploy (syntax + tests must pass), then optional webhook trigger
 
 ## CD Webhook (Optional)
 
