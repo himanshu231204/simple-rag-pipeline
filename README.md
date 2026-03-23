@@ -17,6 +17,14 @@
 
 > A production-ready, end-to-end **Retrieval-Augmented Generation (RAG)** system — **RAGNOVA** — built with LangChain, Sentence Transformers, FAISS, and Groq. Ingest multi-format documents, generate semantic embeddings, persist a searchable knowledge base, and chat with your documents through a Streamlit UI.
 
+🌐 **Live Demo:** [https://ragnova-bot.streamlit.app/](https://ragnova-bot.streamlit.app/)
+
+## 🖥️ Application UI
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/846cd7a8-e316-4b4a-a33a-174efe5dce13" alt="RAGNOVA Application UI" width="800"/>
+</p>
+
 ---
 
 ## 📚 Table of Contents
