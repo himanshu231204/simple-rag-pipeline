@@ -119,6 +119,15 @@ def _light_mode_overrides() -> str:
         .social-link {
             color: #ffffff !important;
         }
+        .pipe-step {
+            background: linear-gradient(145deg, #ffffff 0%, #f4f8ff 100%);
+            border: 1px solid #c6d8ef;
+        }
+        .pipe-step .s-name { color: #1b2a45; }
+        .pipe-step .s-desc { color: #5a6c8d; }
+        .pipe-conn { background: #d4e4f4; }
+        .hiw-sub { color: #435575; }
+        .hiw-legend { color: #435575; }
     """
 
 def _inject_styles(is_light_mode: bool) -> None:
@@ -349,15 +358,71 @@ def main() -> None:
 
             Supported ingestion formats:
             - PDF, TXT, CSV, XLSX, DOCX, JSON
+            """
+        )
 
-            ### Response Generation Pipeline
-            For each query, RAGNOVA executes:
-            1. Query embedding generation
-            2. Top-K semantic retrieval from FAISS
-            3. Context-grounded prompt construction
-            4. LLM response generation (streamed in UI)
-            5. Evidence visibility via retrieved chunks
+        # Animated response-generation pipeline
+        st.markdown(
+            """
+            <div class="hiw-wrapper">
+                <div class="hiw-heading">⚡ Response Generation Pipeline</div>
+                <div class="hiw-sub">
+                    Real-time data flow — watch how your query becomes a grounded answer
+                </div>
+                <div class="pipeline-track">
+                    <div class="pipe-step" data-step="1">
+                        <div class="s-num">01</div>
+                        <div class="s-icon">📝</div>
+                        <div class="s-name">User Query</div>
+                        <div class="s-desc">Your question enters the system</div>
+                    </div>
+                    <div class="pipe-conn"></div>
+                    <div class="pipe-step" data-step="2">
+                        <div class="s-num">02</div>
+                        <div class="s-icon">⚡</div>
+                        <div class="s-name">Embed Query</div>
+                        <div class="s-desc">Vectorised by embedding model</div>
+                    </div>
+                    <div class="pipe-conn"></div>
+                    <div class="pipe-step" data-step="3">
+                        <div class="s-num">03</div>
+                        <div class="s-icon">🔍</div>
+                        <div class="s-name">FAISS Retrieve</div>
+                        <div class="s-desc">Top-K semantic chunks found</div>
+                    </div>
+                    <div class="pipe-conn"></div>
+                    <div class="pipe-step" data-step="4">
+                        <div class="s-num">04</div>
+                        <div class="s-icon">🏗️</div>
+                        <div class="s-name">Build Context</div>
+                        <div class="s-desc">Prompt grounded with evidence</div>
+                    </div>
+                    <div class="pipe-conn"></div>
+                    <div class="pipe-step" data-step="5">
+                        <div class="s-num">05</div>
+                        <div class="s-icon">🤖</div>
+                        <div class="s-name">LLM Generate</div>
+                        <div class="s-desc">Context-aware response crafted</div>
+                    </div>
+                    <div class="pipe-conn"></div>
+                    <div class="pipe-step" data-step="6">
+                        <div class="s-num">06</div>
+                        <div class="s-icon">💬</div>
+                        <div class="s-name">Response</div>
+                        <div class="s-desc">Streamed live to the Chat UI</div>
+                    </div>
+                </div>
+                <div class="hiw-legend">
+                    <span class="hiw-live-dot"></span>
+                    Live pipeline — each step activates in real-time sequence
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
+        st.markdown(
+            """
             ### Output Control
             - **Short Summary**: concise response targeting approximately 400-500 words
             - **Detailed**: structured, broader explanation with deeper coverage

@@ -925,4 +925,198 @@ section[data-testid="stSidebar"] hr {
     animation: fadeIn 0.4s ease-out;
 }
 
+/* ============================================ */
+/* HOW IT WORKS — ANIMATED PIPELINE            */
+/* ============================================ */
+
+@keyframes pipelineActive {
+    0% {
+        border-color: #00a67e;
+        box-shadow: 0 0 0 2px rgba(0, 166, 126, 0.4), 0 0 24px rgba(0, 166, 126, 0.55);
+        transform: translateY(-4px) scale(1.03);
+    }
+    8% {
+        border-color: #00d4aa;
+        box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.5), 0 0 32px rgba(0, 212, 170, 0.6);
+        transform: translateY(-5px) scale(1.04);
+    }
+    16% {
+        border-color: #00a67e;
+        box-shadow: 0 0 0 1px rgba(0, 166, 126, 0.2), 0 0 12px rgba(0, 166, 126, 0.25);
+        transform: translateY(-2px) scale(1.01);
+    }
+    22%, 100% {
+        border-color: #2a2a2a;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes connectorFlow {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes iconBounce {
+    0%, 65%, 100% { transform: scale(1) rotate(0deg); filter: none; }
+    30%            { transform: scale(1.28) rotate(-6deg); filter: drop-shadow(0 0 8px rgba(0, 166, 126, 0.9)); }
+    50%            { transform: scale(1.15) rotate(5deg);  filter: drop-shadow(0 0 5px rgba(0, 212, 170, 0.7)); }
+}
+
+@keyframes hiwTitleGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(0, 212, 170, 0.3); }
+    50%       { text-shadow: 0 0 22px rgba(0, 212, 170, 0.75), 0 0 42px rgba(0, 166, 126, 0.4); }
+}
+
+@keyframes liveDot {
+    0%, 100% { opacity: 1; transform: scale(1);   box-shadow: 0 0 6px rgba(0, 166, 126, 0.7); }
+    50%       { opacity: 0.6; transform: scale(1.4); box-shadow: 0 0 14px rgba(0, 166, 126, 0.9); }
+}
+
+.hiw-wrapper {
+    margin: 1.5rem 0 2rem;
+    animation: slideInUp 0.8s ease-out backwards 0.3s;
+}
+
+.hiw-heading {
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #00d4aa;
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.5px;
+    animation: hiwTitleGlow 3s ease-in-out infinite;
+}
+
+.hiw-sub {
+    text-align: center;
+    color: #8a9fb0;
+    font-size: 0.88rem;
+    margin-bottom: 1.6rem;
+}
+
+.pipeline-track {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    padding: 0.75rem 0.25rem 1.25rem;
+    gap: 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 166, 126, 0.4) rgba(26, 26, 26, 0.8);
+}
+
+.pipeline-track::-webkit-scrollbar       { height: 4px; }
+.pipeline-track::-webkit-scrollbar-track { background: rgba(26, 26, 26, 0.8); border-radius: 2px; }
+.pipeline-track::-webkit-scrollbar-thumb { background: rgba(0, 166, 126, 0.4); border-radius: 2px; }
+
+.pipe-step {
+    flex: 0 0 auto;
+    background: linear-gradient(145deg, #1e1e1e 0%, #181818 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    padding: 0.9rem 0.75rem;
+    width: 110px;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Staggered entrance + sequential glow (7.2 s total cycle, 1.2 s per step) */
+.pipe-step[data-step="1"] { animation: slideInUp 0.5s ease-out backwards 0.15s, pipelineActive 7.2s ease-in-out infinite 0.8s;  }
+.pipe-step[data-step="2"] { animation: slideInUp 0.5s ease-out backwards 0.25s, pipelineActive 7.2s ease-in-out infinite 2.0s;  }
+.pipe-step[data-step="3"] { animation: slideInUp 0.5s ease-out backwards 0.35s, pipelineActive 7.2s ease-in-out infinite 3.2s;  }
+.pipe-step[data-step="4"] { animation: slideInUp 0.5s ease-out backwards 0.45s, pipelineActive 7.2s ease-in-out infinite 4.4s;  }
+.pipe-step[data-step="5"] { animation: slideInUp 0.5s ease-out backwards 0.55s, pipelineActive 7.2s ease-in-out infinite 5.6s;  }
+.pipe-step[data-step="6"] { animation: slideInUp 0.5s ease-out backwards 0.65s, pipelineActive 7.2s ease-in-out infinite 6.8s;  }
+
+.pipe-step .s-num {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: #00a67e;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+}
+
+.pipe-step .s-icon {
+    font-size: 1.55rem;
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+    animation: iconBounce 7.2s ease-in-out infinite;
+}
+
+/* Sync icon bounce with the step's active window */
+.pipe-step[data-step="1"] .s-icon { animation-delay: 1.05s;  }
+.pipe-step[data-step="2"] .s-icon { animation-delay: 2.25s;  }
+.pipe-step[data-step="3"] .s-icon { animation-delay: 3.45s;  }
+.pipe-step[data-step="4"] .s-icon { animation-delay: 4.65s;  }
+.pipe-step[data-step="5"] .s-icon { animation-delay: 5.85s;  }
+.pipe-step[data-step="6"] .s-icon { animation-delay: 7.05s;  }
+
+.pipe-step .s-name {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+}
+
+.pipe-step .s-desc {
+    font-size: 0.63rem;
+    color: #6a7f93;
+    line-height: 1.35;
+}
+
+/* Connector — animated flowing-light line */
+.pipe-conn {
+    flex: 1 1 auto;
+    min-width: 18px;
+    max-width: 48px;
+    height: 3px;
+    background: #1c1c1c;
+    border-radius: 2px;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.pipe-conn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #00a67e     35%,
+        #00d4aa     50%,
+        #00a67e     65%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: connectorFlow 1.5s linear infinite;
+}
+
+/* Legend row */
+.hiw-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    color: #6a7f93;
+    margin-top: 0.5rem;
+}
+
+.hiw-live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00a67e;
+    display: inline-block;
+    flex-shrink: 0;
+    animation: liveDot 1.5s ease-in-out infinite;
+}
+
 /* MODE_OVERRIDES */
