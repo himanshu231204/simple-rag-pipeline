@@ -4,6 +4,7 @@ from langchain_community.document_loaders import (
     CSVLoader,
     Docx2txtLoader,
     JSONLoader,
+    PyMuPDFLoader,
     PyPDFLoader,
     TextLoader,
     UnstructuredExcelLoader,
@@ -25,12 +26,20 @@ def load_all_documents(data_dir: str) -> List[Any]:
     for pdf_file in pdf_files:
         print(f"[DEBUG] Loading PDF: {pdf_file}")
         try:
-            loader = PyPDFLoader(str(pdf_file))
+            loader = PyMuPDFLoader(str(pdf_file))
             loaded = loader.load()
             print(f"[DEBUG] Loaded {len(loaded)} PDF docs from {pdf_file}")
             documents.extend(loaded)
         except Exception as e:
-            print(f"[ERROR] Failed to load PDF {pdf_file}: {e}")
+            print(f"[WARN] PyMuPDF failed for {pdf_file}: {e}")
+            try:
+                # Fallback for edge cases where pymupdf extraction fails.
+                fallback_loader = PyPDFLoader(str(pdf_file))
+                loaded = fallback_loader.load()
+                print(f"[DEBUG] Fallback loaded {len(loaded)} PDF docs from {pdf_file}")
+                documents.extend(loaded)
+            except Exception as fallback_error:
+                print(f"[ERROR] Skipping PDF {pdf_file}. Fallback also failed: {fallback_error}")
 
     # TXT files
     txt_files = list(data_path.glob('**/*.txt'))
