@@ -14,6 +14,8 @@ load_dotenv()
 DEFAULT_EMBED_MODEL = "all-MiniLM-L6-v2"
 DEFAULT_LLM_MODEL = "llama-3.3-70b-versatile"
 DEFAULT_PERSIST_DIR = "faiss_store"
+APP_NAME = "RAGNOVA"
+APP_TAGLINE = "Your live AI knowledge copilot"
 DEFAULT_LLM_MODELS = [
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
@@ -56,7 +58,7 @@ def build_index(persist_dir: str, embedding_model: str) -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Simple RAG Chat", page_icon="R", layout="wide")
+    st.set_page_config(page_title=APP_NAME, page_icon="RN", layout="wide")
 
     st.markdown(
         """
@@ -119,13 +121,127 @@ def main() -> None:
             border-radius: 16px;
             padding: 1rem 1.1rem;
         }
+        .dev-shell {
+            max-width: 980px;
+            margin: 0 auto;
+            padding-top: 0.75rem;
+        }
+        .dev-card {
+            background: linear-gradient(145deg, #1f1f1f 0%, #161616 100%);
+            border: 1px solid #313131;
+            border-radius: 18px;
+            padding: 1.2rem 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+        }
+        .dev-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #f1f1f1;
+            margin-bottom: 0.35rem;
+        }
+        .dev-role {
+            color: #bcbcbc;
+            margin-bottom: 0.8rem;
+        }
+        .dev-desc {
+            color: #d7d7d7;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.7rem;
+        }
+        .dev-pill {
+            border: 1px solid #2f2f2f;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 0.6rem 0.7rem;
+        }
+        .dev-pill .k {
+            color: #9f9f9f;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .dev-pill .v {
+            color: #f2f2f2;
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 0.6rem;
+        }
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            color: #f4f4f4 !important;
+            background: #1b1b1b;
+            border: 1px solid #2d2d2d;
+            border-radius: 12px;
+            padding: 0.65rem 0.8rem;
+            transition: all 0.15s ease;
+        }
+        .social-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+        }
+        .social-link.github {
+            background: linear-gradient(145deg, #1f1f1f 0%, #171717 100%);
+            border-color: #3a3a3a;
+        }
+        .social-link.linkedin {
+            background: linear-gradient(145deg, #10263f 0%, #0c1f34 100%);
+            border-color: #2f5f8c;
+        }
+        .social-link.twitter {
+            background: linear-gradient(145deg, #14314a 0%, #102a40 100%);
+            border-color: #326a95;
+        }
+        .social-link.email {
+            background: linear-gradient(145deg, #3f1a1f 0%, #301519 100%);
+            border-color: #8c3945;
+        }
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .social-icon img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+        .social-text {
+            min-width: 0;
+        }
+        .social-label {
+            font-weight: 600;
+            margin-bottom: 0.12rem;
+        }
+        .social-handle {
+            color: #aaaaaa;
+            font-size: 0.85rem;
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
     with st.sidebar:
-        st.header("Settings")
+        st.header(f"{APP_NAME} Settings")
+        st.caption(APP_TAGLINE)
         persist_dir = st.text_input("Vector store path", value=DEFAULT_PERSIST_DIR)
 
         st.subheader("Embedding Model")
@@ -193,7 +309,7 @@ def main() -> None:
     if "pending_query" not in st.session_state:
         st.session_state.pending_query = None
 
-    tab_chat, tab_dev = st.tabs(["Chat", "Developer Info"])
+    tab_chat, tab_about, tab_dev = st.tabs(["Chat", "About RAGNOVA", "Developer Info"])
 
     with tab_chat:
         st.markdown('<div class="app-shell">', unsafe_allow_html=True)
@@ -203,8 +319,8 @@ def main() -> None:
         )
 
         if not st.session_state.chat_history:
-            st.markdown('<div class="hero">Where should we begin?</div>', unsafe_allow_html=True)
-            st.markdown('<div class="subhero">Ask from your indexed docs. I will answer live in chat.</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="hero">{APP_NAME}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="subhero">{APP_TAGLINE}. Ask from your indexed docs and get real-time answers.</div>', unsafe_allow_html=True)
             st.markdown('<div class="start-space"></div>', unsafe_allow_html=True)
 
         for msg in st.session_state.chat_history:
@@ -261,8 +377,8 @@ def main() -> None:
             st.session_state.pending_query = None
             st.rerun()
 
-        st.caption("Type your query and press Enter to run.")
-        query = st.chat_input("Ask anything about your indexed PDFs...")
+        st.caption("Type your query and press Enter.")
+        query = st.chat_input(f"Ask {APP_NAME} anything about your indexed PDFs...")
 
         clear_clicked = st.button("Clear", use_container_width=True)
 
@@ -286,20 +402,139 @@ def main() -> None:
 
         st.markdown("</div>", unsafe_allow_html=True)
 
+    with tab_about:
+        st.subheader("About RAGNOVA")
+        st.markdown(
+            """
+            ### What RAGNOVA Is
+            RAGNOVA is a Retrieval-Augmented Generation (RAG) assistant designed for document-grounded Q&A.
+            It combines semantic retrieval from your indexed knowledge base with an LLM to produce clear,
+            context-aware answers.
+
+            ### Is It "Trained" on Your Data?
+            RAGNOVA does **not** fine-tune the model on your files during app usage.
+
+            Instead, it uses:
+            - A pre-trained embedding model for vector search
+            - A pre-trained LLM for response generation
+            - Your indexed documents as retrieval context at query time
+
+            This means answers are generated from retrieved chunks of your documents, not from model re-training.
+
+            ### Data Sources Used for Answers
+            The app reads local data from your project and builds a FAISS index for retrieval.
+
+            Primary data path:
+            - `data/` (documents)
+            - `faiss_store/` (vector index + metadata)
+
+            Supported document formats in the loader pipeline:
+            - PDF, TXT, CSV, Excel, DOCX, JSON
+
+            ### How Results Are Generated
+            For each user query, RAGNOVA follows this flow:
+            1. Convert query into an embedding vector
+            2. Retrieve top-K most relevant chunks from FAISS
+            3. Build a grounded prompt from retrieved context
+            4. Generate final answer with selected LLM
+            5. Show retrieved chunks for transparency and auditability
+
+            ### Output Modes
+            - **Short Summary**: Targeted concise response (about 400-500 words)
+            - **Detailed**: Structured and more comprehensive explanation
+
+            ### Reliability & Limits
+            - Answer quality depends on document quality and retrieval relevance
+            - If key facts are missing from indexed data, output can be incomplete
+            - Better chunking and clean source documents improve results significantly
+
+            ### Privacy & API Use
+            - You can provide your own API key from the UI
+            - Retrieval runs on your local indexed files
+            - LLM response generation uses the configured remote model provider
+            """
+        )
+
     with tab_dev:
-        st.subheader("Developer")
+        st.markdown('<div class="dev-shell">', unsafe_allow_html=True)
         st.markdown(
-            "[![GitHub](https://img.shields.io/badge/GitHub-himanshu231204-181717?style=flat-square&logo=github)](https://github.com/himanshu231204)"
+            """
+            <div class="dev-card">
+                <div class="dev-title">Himanshu Kumar</div>
+                <div class="dev-role">AI/ML Developer | RAG Systems Builder</div>
+                <p class="dev-desc">
+                    Builder of <strong>RAGNOVA</strong>, focused on practical retrieval-augmented systems, reliable
+                    document pipelines, and production-ready AI app UX.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
+
         st.markdown(
-            "[![LinkedIn](https://img.shields.io/badge/LinkedIn-himanshu231204-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/himanshu231204)"
+            """
+            <div class="dev-card">
+                <div class="dev-grid">
+                    <div class="dev-pill">
+                        <div class="k">Project</div>
+                        <div class="v">RAGNOVA</div>
+                    </div>
+                    <div class="dev-pill">
+                        <div class="k">Domain</div>
+                        <div class="v">RAG and LLM Apps</div>
+                    </div>
+                    <div class="dev-pill">
+                        <div class="k">Primary Stack</div>
+                        <div class="v">Python, LangChain, FAISS</div>
+                    </div>
+                    <div class="dev-pill">
+                        <div class="k">Interface</div>
+                        <div class="v">Streamlit</div>
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
+
         st.markdown(
-            "[![Twitter](https://img.shields.io/badge/Twitter-himanshu231204-1DA1F2?style=flat-square&logo=twitter)](https://twitter.com/himanshu231204)"
+            """
+            <div class="dev-card">
+                <div class="social-grid">
+                    <a class="social-link github" href="https://github.com/himanshu231204" target="_blank">
+                        <div class="social-icon"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub logo"></div>
+                        <div class="social-text">
+                            <div class="social-label">GitHub</div>
+                            <div class="social-handle">@himanshu231204</div>
+                        </div>
+                    </a>
+                    <a class="social-link linkedin" href="https://www.linkedin.com/in/himanshu231204" target="_blank">
+                        <div class="social-icon"><img src="https://cdn.simpleicons.org/linkedin/ffffff" alt="LinkedIn logo"></div>
+                        <div class="social-text">
+                            <div class="social-label">LinkedIn</div>
+                            <div class="social-handle">/in/himanshu231204</div>
+                        </div>
+                    </a>
+                    <a class="social-link twitter" href="https://twitter.com/himanshu231204" target="_blank">
+                        <div class="social-icon"><img src="https://cdn.simpleicons.org/x/ffffff" alt="Twitter/X logo"></div>
+                        <div class="social-text">
+                            <div class="social-label">Twitter / X</div>
+                            <div class="social-handle">@himanshu231204</div>
+                        </div>
+                    </a>
+                    <a class="social-link email" href="mailto:himanshu231204@gmail.com">
+                        <div class="social-icon"><img src="https://cdn.simpleicons.org/gmail/ffffff" alt="Gmail logo"></div>
+                        <div class="social-text">
+                            <div class="social-label">Email</div>
+                            <div class="social-handle">himanshu231204@gmail.com</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-        st.markdown(
-            "[![Email](https://img.shields.io/badge/Email-himanshu231204%40gmail.com-D14836?style=flat-square&logo=gmail)](mailto:himanshu231204@gmail.com)"
-        )
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":

@@ -146,6 +146,49 @@ We will keep appending updates here.
   - Local pytest run passed: `3 passed`
 - Status: Fixed.
 
+### 14) Chatbot naming + UI branding refresh
+- Goal: Improve bot identity and make UI feel more product-like.
+- Action taken:
+  - Added branding constants in `streamlit_app.py`:
+    - `APP_NAME = "RAGNOVA"`
+    - `APP_TAGLINE = "Your live AI knowledge copilot"`
+  - Applied branding to:
+    - page title
+    - sidebar header/caption
+    - hero and sub-hero text
+    - chat input placeholder
+- Status: Implemented.
+
+### 15) Professional "About RAGNOVA" tab
+- Goal: Provide a clear, professional explanation of system behavior and data usage.
+- Action taken:
+  - Added `About RAGNOVA` tab in `streamlit_app.py`
+  - Included detailed sections for:
+    - what RAGNOVA is
+    - whether it is trained/fine-tuned on user data
+    - data sources and supported file types
+    - result generation flow (retrieval + generation)
+    - output modes, reliability limits, and privacy/API usage
+- Status: Implemented.
+
+### 16) Developer tab professional UI redesign
+- Goal: Make Developer tab look polished and portfolio-ready.
+- Action taken:
+  - Replaced badge-only layout with a professional card-based design
+  - Added structured profile card (name, role, intro)
+  - Added summary pills for project/domain/stack/interface
+  - Added clean social action links for GitHub, LinkedIn, Twitter, and Email
+  - Added dedicated CSS classes for spacing, typography, and hover states
+- Status: Implemented.
+
+### 17) Developer tab visual polish (colors + logos)
+- Goal: Improve visual identity beyond black/white and use platform logos in cards.
+- Action taken:
+  - Added colorful social card variants for GitHub, LinkedIn, Twitter/X, and Email
+  - Added logo icons inside each social card using platform icon sources
+  - Improved card depth with better borders, gradients, and hover elevation
+- Status: Implemented.
+
 ## Next updates
 - Add each new issue in this format:
   - Issue
