@@ -1,5 +1,10 @@
-# RAGNOVA — Simple RAG Pipeline
+## RAGNOVA
 
+Your live AI knowledge copilot. Ask from your indexed docs and get real-time answers.
+
+<p align="center">
+   < alt="RAGNOVA" width="200"/>
+</p>
 <p align="center">
   <img src="assets/ui.png" alt="RAG Pipeline Diagram" width="800"/>
 </p>
