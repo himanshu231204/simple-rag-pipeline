@@ -1,4 +1,4 @@
-## RAGNOVA
+<h1 align="center">RAGNOVA</h1>
 
 Your live AI knowledge copilot. Ask from your indexed docs and get real-time answers.
 
