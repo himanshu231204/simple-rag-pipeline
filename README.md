@@ -1,7 +1,7 @@
 # RAGNOVA — Simple RAG Pipeline
 
 <p align="center">
-  <img src="assets/rag2.png" alt="RAG Pipeline Diagram" width="800"/>
+  <img src="assets/ui.png" alt="RAG Pipeline Diagram" width="800"/>
 </p>
 
 <p align="center">
