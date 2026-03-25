@@ -8,3 +8,44 @@ The format is based on Keep a Changelog and this project follows Semantic Versio
 
 ### Added
 - Initial changelog scaffold.
+
+## [2.0.0] - 2026-03-25
+
+### Added
+- **UI/UX Refactoring**: Restructured streamlit_app.py into modular components
+  - `src/ui/` - Frontend UI package
+    - `config.py` - Centralized configuration constants
+    - `styles.py` - Theme management and CSS styling
+    - `sidebar.py` - Sidebar settings and controls
+    - `pages/` - Tab-specific UI components
+      - `chat.py` - Chat interface and query handling
+      - `about.py` - About RAGNOVA information
+      - `developer.py` - Developer info section
+  - `src/backend/` - Backend business logic package
+    - `index_manager.py` - FAISS index operations and utilities
+    - `rag_client.py` - RAG search client initialization
+  - `src/rag/` - Core RAG components package (NEW)
+    - `data_loader.py` - Multi-format document loading
+    - `embedding.py` - Text chunking and embeddings
+    - `vectorstore.py` - FAISS vector index management
+    - `search.py` - RAG orchestration and LLM integration
+- Fixed embedding dimension mismatch error with proper validation
+- Fixed light mode theme CSS (text was white, now correctly dark)
+- Removed embedding model and LLM model selectors (fixed to recommended defaults)
+
+### Changed
+- `streamlit_app.py` now serves as clean entry point (imports all UI/backend modules)
+- Modular package structure improves maintainability and testability
+- Constants moved to `src/ui/config.py`
+- Styling logic moved to `src/ui/styles.py`
+- Index operations moved to `src/backend/index_manager.py`
+- RAG client management moved to `src/backend/rag_client.py`
+- All RAG core components consolidated in `src/rag/` folder
+  - Imports updated: `from src.rag.search import RAGSearch`
+  - Removed duplicate files from `src/` (data_loader.py, embedding.py, search.py, vectorstore.py)
+
+### Fixed
+- Light mode CSS now displays dark text (was previously white on light background)
+- Embedding model validation on index load prevents dimension mismatch errors
+- Sidebar UI properly initialized during page load
+- Project structure cleaned - removed duplicate RAG component files

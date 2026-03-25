@@ -4,9 +4,9 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 
 try:
-    from src.data_loader import load_all_documents
+    from src.rag.data_loader import load_all_documents
 except ModuleNotFoundError:
-    # Allow running this file directly: python src/embedding.py
+    # Allow running this file directly
     from data_loader import load_all_documents
 
 class EmbeddingPipeline:
@@ -36,7 +36,6 @@ class EmbeddingPipeline:
 
 # Example usage
 if __name__ == "__main__":
-    
     docs = load_all_documents("data")
     emb_pipe = EmbeddingPipeline()
     chunks = emb_pipe.chunk_documents(docs)

@@ -7,9 +7,9 @@ from typing import List, Any
 from sentence_transformers import SentenceTransformer
 
 try:
-    from src.embedding import EmbeddingPipeline
+    from src.rag.embedding import EmbeddingPipeline
 except ModuleNotFoundError:
-    # Allow running this file directly: python src/vectorstore.py
+    # Allow running this file directly
     from embedding import EmbeddingPipeline
 
 class FaissVectorStore:
@@ -96,12 +96,6 @@ class FaissVectorStore:
 # Example usage
 if __name__ == "__main__":
     try:
-        from src.data_loader import load_all_documents
+        from src.rag.data_loader import load_all_documents
     except ModuleNotFoundError:
-        # Allow direct execution where package prefix is unavailable
         from data_loader import load_all_documents
-    docs = load_all_documents("data")
-    store = FaissVectorStore("faiss_store")
-    store.build_from_documents(docs)
-    store.load()
-    print(store.query("What is logistic regression and how does it differ from linear regression?", top_k=3))

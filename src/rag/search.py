@@ -1,7 +1,7 @@
 import os
 from typing import Iterator
 from dotenv import load_dotenv
-from src.vectorstore import FaissVectorStore
+from src.rag.vectorstore import FaissVectorStore
 from langchain_groq import ChatGroq
 
 load_dotenv()
@@ -20,7 +20,7 @@ class RAGSearch:
         meta_path = os.path.join(persist_dir, "metadata.pkl")
         if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
             try:
-                from src.data_loader import load_all_documents
+                from src.rag.data_loader import load_all_documents
             except ModuleNotFoundError:
                 from data_loader import load_all_documents
             docs = load_all_documents("data")
