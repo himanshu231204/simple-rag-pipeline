@@ -1,6 +1,6 @@
 import inspect
 
-from src.search import RAGSearch
+from src.rag.search import RAGSearch
 
 
 def test_search_and_summarize_accepts_response_mode() -> None:
