@@ -16,6 +16,9 @@ The format is based on Keep a Changelog and this project follows Semantic Versio
   - Recent queries table with export capability
   - Query logging integrated into chat flow
 
+### Fixed
+- Fixed bytes format error in analytics dashboard distance column
+
 ## [2.0.1] - 2026-03-25
 
 ### Added

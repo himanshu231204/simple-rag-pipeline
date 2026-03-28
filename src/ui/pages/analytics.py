@@ -139,9 +139,16 @@ def render_analytics_page():
             "chunks_retrieved": "Chunks",
             "avg_chunk_distance": "Avg Distance"
         })
-        df_recent["Avg Distance"] = df_recent["Avg Distance"].apply(
-            lambda x: f"{x:.3f}" if x else "N/A"
-        )
+        def _format_distance(x):
+            if x is None:
+                return "N/A"
+            try:
+                if isinstance(x, bytes):
+                    x = float(x)
+                return f"{float(x):.3f}"
+            except (ValueError, TypeError):
+                return "N/A"
+        df_recent["Avg Distance"] = df_recent["Avg Distance"].apply(_format_distance)
         st.dataframe(df_recent, use_container_width=True, hide_index=True)
     else:
         st.write("No recent queries")
